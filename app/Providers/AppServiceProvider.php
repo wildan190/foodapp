@@ -13,7 +13,8 @@ use App\Repositories\Interface\SalesRepositoryInterface;
 use App\Repositories\SalesRepository;
 use App\Repositories\Interface\TransactionRepositoryInterface;
 use App\Repositories\TransactionRepository;
-
+use App\Repositories\UserRepository;
+use App\Repositories\Interface\UserRepositoryInterface;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MenuRepositoryInterface::class, MenuRepository::class);
         $this->app->bind(SalesRepositoryInterface::class, SalesRepository::class);
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
     /**
