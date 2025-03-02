@@ -23,12 +23,12 @@ class PermissionController extends Controller
     {
         $permissions = $this->getPermissions->execute(10);
 
-        return view('pages.permissions.index', compact('permissions'));
+        return view('permissions.index', compact('permissions'));
     }
 
     public function create()
     {
-        return view('pages.permissions.create');
+        return view('permissions.create');
     }
 
     public function store(Request $request)

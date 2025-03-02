@@ -24,14 +24,14 @@ class RoleController extends Controller
     {
         $roles = $this->getRoles->execute(10);
 
-        return view('pages.roles.index', compact('roles'));
+        return view('roles.index', compact('roles'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
 
-        return view('pages.roles.create', compact('permissions'));
+        return view('roles.create', compact('permissions'));
     }
 
     public function store(Request $request)
