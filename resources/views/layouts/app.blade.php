@@ -132,22 +132,31 @@
         <h4>Menu</h4>
         <nav class="nav flex-column">
             <a href="{{ route('dashboard') }}" class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}">
-                <i class="fas fa-tachometer-alt"></i> Dashboard
+            <i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
             <a href="{{ route('customers.index') }}" class="nav-link {{ Request::is('customers*') ? 'active' : '' }}">
-                <i class="fas fa-user"></i> Customer
+            <i class="fas fa-user"></i> Customer
             </a>
             <a href="{{ route('suppliers.index') }}" class="nav-link {{ Request::is('suppliers*') ? 'active' : '' }}">
-                <i class="fas fa-truck"></i> Supplier
+            <i class="fas fa-truck"></i> Supplier
             </a>
             <a href="{{ route('menus.index') }}" class="nav-link {{ Request::is('menus*') ? 'active' : '' }}">
-                <i class="fas fa-utensils"></i> Menu
+            <i class="fas fa-utensils"></i> Menu
             </a>
             <a href="{{ route('sales.index') }}" class="nav-link {{ Request::is('sales*') ? 'active' : '' }}">
-                <i class="fas fa-shopping-cart"></i> Sales
+            <i class="fas fa-shopping-cart"></i> Sales
             </a>
             <a href="{{ route('transactions.index') }}" class="nav-link {{ Request::is('transactions*') ? 'active' : '' }}">
-                <i class="fas fa-money-bill"></i> Transaction
+            <i class="fas fa-money-bill"></i> Transaction
+            </a>
+            <a href="{{ route('permissions.index') }}" class="nav-link {{ Request::is('permissions*') ? 'active' : '' }}">
+            <i class="fas fa-lock"></i> Permissions
+            </a>
+            <a href="{{ route('roles.index') }}" class="nav-link {{ Request::is('roles*') ? 'active' : '' }}">
+            <i class="fas fa-user-tag"></i> Roles
+            </a>
+            <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
+            <i class="fas fa-users"></i> Users
             </a>
         </nav>
     </div>
