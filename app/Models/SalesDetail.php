@@ -13,7 +13,7 @@ class SalesDetail extends Model
         'sales_id',
         'menu_id',
         'quantity',
-        'price'
+        'price',
     ];
 
     public function sales()

@@ -27,8 +27,10 @@ class SupplierRepository implements SupplierRepositoryInterface
         $supplier = Supplier::find($id);
         if ($supplier) {
             $supplier->update($data);
+
             return $supplier;
         }
+
         return null;
     }
 
@@ -38,6 +40,7 @@ class SupplierRepository implements SupplierRepositoryInterface
         if ($supplier) {
             return $supplier->delete();
         }
+
         return false;
     }
 }

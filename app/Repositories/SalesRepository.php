@@ -24,7 +24,7 @@ class SalesRepository implements SalesRepositoryInterface
         $sales = Sales::create([
             'customer_id' => $data['customer_id'],
             'order_fee' => $data['order_fee'],
-            'total_price' => $data['total_price']
+            'total_price' => $data['total_price'],
         ]);
 
         foreach ($data['menu_id'] as $index => $menuId) {
@@ -32,13 +32,12 @@ class SalesRepository implements SalesRepositoryInterface
                 'sales_id' => $sales->id,
                 'menu_id' => $menuId,
                 'quantity' => $data['quantities'][$index],
-                'price' => Menu::find($menuId)->price
+                'price' => Menu::find($menuId)->price,
             ]);
         }
 
         return $sales;
     }
-
 
     public function update($id, array $data)
     {
@@ -46,7 +45,7 @@ class SalesRepository implements SalesRepositoryInterface
         $sales->update([
             'customer_id' => $data['customer_id'],
             'order_fee' => $data['order_fee'],
-            'total_price' => $data['total_price']
+            'total_price' => $data['total_price'],
         ]);
 
         $sales->salesDetails()->delete();
@@ -56,7 +55,7 @@ class SalesRepository implements SalesRepositoryInterface
                 'sales_id' => $sales->id,
                 'menu_id' => $menuId,
                 'quantity' => $data['quantities'][$index],
-                'price' => $data['prices'][$index]
+                'price' => $data['prices'][$index],
             ]);
         }
 

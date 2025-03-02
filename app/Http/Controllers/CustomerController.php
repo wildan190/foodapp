@@ -18,6 +18,7 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = $this->customerRepository->getAll();
+
         return view('customers.index', compact('customers'));
     }
 
@@ -25,9 +26,10 @@ class CustomerController extends Controller
     public function show($id)
     {
         $customer = $this->customerRepository->findById($id);
-        if (!$customer) {
+        if (! $customer) {
             return redirect()->route('customers.index')->with('error', 'Customer not found');
         }
+
         return view('customers.show', compact('customer'));
     }
 
@@ -48,6 +50,7 @@ class CustomerController extends Controller
         ]);
 
         $this->customerRepository->create($validatedData);
+
         return redirect()->route('customers.index')->with('success', 'Customer created successfully');
     }
 
@@ -55,9 +58,10 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = $this->customerRepository->findById($id);
-        if (!$customer) {
+        if (! $customer) {
             return redirect()->route('customers.index')->with('error', 'Customer not found');
         }
+
         return view('customers.edit', compact('customer'));
     }
 
@@ -65,18 +69,19 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         $customer = $this->customerRepository->findById($id);
-        if (!$customer) {
+        if (! $customer) {
             return redirect()->route('customers.index')->with('error', 'Customer not found');
         }
 
         $validatedData = $request->validate([
             'name' => 'sometimes|required|string|max:255',
-            'email' => 'nullable|email|unique:customers,email,' . $id,
-            'phone_number' => 'sometimes|required|string|unique:customers,phone_number,' . $id,
+            'email' => 'nullable|email|unique:customers,email,'.$id,
+            'phone_number' => 'sometimes|required|string|unique:customers,phone_number,'.$id,
             'address' => 'nullable|string',
         ]);
 
         $this->customerRepository->update($id, $validatedData);
+
         return redirect()->route('customers.index')->with('success', 'Customer updated successfully');
     }
 
@@ -84,11 +89,12 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         $customer = $this->customerRepository->findById($id);
-        if (!$customer) {
+        if (! $customer) {
             return redirect()->route('customers.index')->with('error', 'Customer not found');
         }
 
         $this->customerRepository->delete($id);
+
         return redirect()->route('customers.index')->with('success', 'Customer deleted successfully');
     }
 }

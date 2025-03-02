@@ -26,12 +26,14 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         $transaction = Transaction::findOrFail($id);
         $transaction->update($data);
+
         return $transaction;
     }
 
     public function deleteTransaction($id)
     {
         $transaction = Transaction::findOrFail($id);
+
         return $transaction->delete();
     }
 }

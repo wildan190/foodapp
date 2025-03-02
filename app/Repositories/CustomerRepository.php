@@ -26,12 +26,14 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function update(int $id, array $data): bool
     {
         $customer = Customer::find($id);
+
         return $customer ? $customer->update($data) : false;
     }
 
     public function delete(int $id): bool
     {
         $customer = Customer::find($id);
+
         return $customer ? $customer->delete() : false;
     }
 }

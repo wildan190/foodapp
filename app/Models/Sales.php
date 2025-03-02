@@ -12,7 +12,7 @@ class Sales extends Model
     protected $fillable = [
         'customer_id',
         'order_fee',
-        'total_price'
+        'total_price',
     ];
 
     public function customer()

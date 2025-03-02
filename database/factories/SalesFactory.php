@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Sales;
 use App\Models\Customer;
 use App\Models\Menu;
+use App\Models\Sales;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SalesFactory extends Factory
@@ -15,7 +15,7 @@ class SalesFactory extends Factory
     {
         $customer = Customer::inRandomOrder()->first();
         $menus = Menu::inRandomOrder()->take(rand(1, 3))->get(); // Ambil 1-3 menu secara acak
-        
+
         $order_fee = $this->faker->randomFloat(2, 1, 5); // Biaya order acak
         $total_price = 0;
 

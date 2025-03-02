@@ -6,7 +6,6 @@ use App\Models\Customer;
 use App\Models\Menu;
 use App\Models\Sales;
 use App\Models\Supplier;
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

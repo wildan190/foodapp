@@ -27,8 +27,10 @@ class MenuRepository implements MenuRepositoryInterface
         $menu = Menu::find($id);
         if ($menu) {
             $menu->update($data);
+
             return $menu;
         }
+
         return null;
     }
 
@@ -38,6 +40,7 @@ class MenuRepository implements MenuRepositoryInterface
         if ($menu) {
             return $menu->delete();
         }
+
         return false;
     }
 }
