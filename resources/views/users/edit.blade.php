@@ -1,83 +1,91 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Edit User') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')  {{-- Memanggil layout utama --}}
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+@section('content')  {{-- Mulai bagian konten --}}
+<div class="container py-4">
 
-                @if (session('success'))
-                    <div class="alert alert-success border-left-success alert-dismissible fade show p-4 mb-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border border-green-300 dark:border-green-700 rounded">
-                        {{ session('success') }}
-                        <button type="button" class="close text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
+    {{-- Alert sukses --}}
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-                @if (session('status'))
-                    <div class="alert alert-success p-4 mb-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border border-green-300 dark:border-green-700 rounded">
-                        {{ session('status') }}
-                    </div>
-                @endif
+    {{-- Alert status --}}
+    @if (session('status'))
+        <div class="alert alert-success mb-4" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
 
-                <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
-                    <div class="border-b border-gray-200 dark:border-gray-700">
-                        <h6 class="text-xl font-bold text-gray-800 dark:text-gray-200 p-4">{{ __('Edit User') }}</h6>
-                    </div>
-                    <div class="p-4">
-                        <form action="{{ route('users.update', $user->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
+    {{-- Card utama --}}
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">{{ __('Edit User') }}</h5>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('users.update', $user->id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">{{ __('Name') }}</label>
-                                <input type="text" name="name" id="name" value="{{ $user->name }}" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300" required>
-                                @error('name')
-                                    <p class="text-red-500 dark:text-red-300 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="email" class="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">{{ __('Email') }}</label>
-                                <input type="email" name="email" id="email" value="{{ $user->email }}" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300" required>
-                                @error('email')
-                                    <p class="text-red-500 dark:text-red-300 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">{{ __('Roles') }}</label>
-                                @foreach($roles as $role)
-                                    <div class="flex items-center mb-2">
-                                        <input type="checkbox" name="roles[]" id="role-{{ $role->id }}" value="{{ $role->id }}" 
-                                        class="mr-2" {{ $user->roles->contains($role->id) ? 'checked' : '' }} onchange="checkRole(this)">
-                                        <label for="role-{{ $role->id }}" class="text-gray-700 dark:text-gray-300">{{ $role->name }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-
-                            <script>
-                                function checkRole(checkbox) {
-                                    if($("input[name='roles[]']:checked").length > 1 && checkbox.checked) {
-                                        alert("Hanya bisa pilih salah satu");
-                                        checkbox.checked = false;
-                                    }
-                                }
-                            </script>
-
-                            <div class="flex justify-between mt-6">
-                                <button type="submit" class="bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">{{ __('Update') }}</button>
-                                <a href="{{ route('users.index') }}" class="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">{{ __('Cancel') }}</a>
-                            </div>
-                        </form>
-                    </div>
+                {{-- Input Nama --}}
+                <div class="mb-3">
+                    <label for="name" class="form-label">{{ __('Name') }}</label>
+                    <input type="text" name="name" id="name" value="{{ $user->name }}" class="form-control @error('name') is-invalid @enderror" required>
+                    @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
-            </div>
+                {{-- Input Email --}}
+                <div class="mb-3">
+                    <label for="email" class="form-label">{{ __('Email') }}</label>
+                    <input type="email" name="email" id="email" value="{{ $user->email }}" class="form-control @error('email') is-invalid @enderror" required>
+                    @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                {{-- Input Roles --}}
+                <div class="mb-3">
+                    <label class="form-label">{{ __('Roles') }}</label>
+                    @foreach($roles as $role)
+                        <div class="form-check">
+                            <input type="checkbox" name="roles[]" id="role-{{ $role->id }}" value="{{ $role->id }}" 
+                            class="form-check-input" {{ $user->roles->contains($role->id) ? 'checked' : '' }} onchange="checkRole(this)">
+                            <label for="role-{{ $role->id }}" class="form-check-label">{{ $role->name }}</label>
+                        </div>
+                    @endforeach
+                </div>
+
+                {{-- Script untuk cek hanya satu role yang bisa dipilih --}}
+                <script>
+                    function checkRole(checkbox) {
+                        const checkedRoles = document.querySelectorAll("input[name='roles[]']:checked");
+                        if (checkedRoles.length > 1 && checkbox.checked) {
+                            alert("Hanya bisa pilih salah satu");
+                            checkbox.checked = false;
+                        }
+                    }
+                </script>
+
+                {{-- Tombol Submit dan Cancel --}}
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> {{ __('Update') }}
+                    </button>
+                    <a href="{{ route('users.index') }}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> {{ __('Cancel') }}
+                    </a>
+                </div>
+
+            </form>
         </div>
     </div>
-</x-app-layout>
+
+</div>
+@endsection  {{-- Akhir bagian konten --}}

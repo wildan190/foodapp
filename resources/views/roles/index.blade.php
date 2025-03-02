@@ -1,70 +1,79 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Roles') }}
-            </h2>
-            <a href="{{ route('roles.create') }}" class="inline-block bg-indigo-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500 ml-4 mr-4">
-                <span class="mr-2">
-                    <i class="fas fa-plus"></i>
-                </span>
-                <span>{{ __('Create Role') }}</span>
+@extends('layouts.app')  {{-- Memanggil layout utama --}}
+
+@section('content')  {{-- Mulai bagian konten --}}
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if (session('status'))
+                <div class="alert alert-success mb-4" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <h2 class="mb-3">Role List</h2>
+            <a href="{{ route('roles.create') }}" class="btn btn-primary mb-3">
+                <i class="fas fa-plus"></i> Add New Role
             </a>
-        </div>
-    </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                
-                @if (session('success'))
-                    <div class="alert alert-success border-left-success alert-dismissible fade show p-4 mb-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border border-green-300 dark:border-green-700 rounded">
-                        {{ session('success') }}
-                        <button type="button" class="close text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
-
-                @if (session('status'))
-                    <div class="alert alert-success p-4 mb-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border border-green-300 dark:border-green-700 rounded">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-                <table class="min-w-full bg-white dark:bg-gray-800 shadow-md rounded-lg">
-                    <thead>
-                        <tr class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
-                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">
-                                No.
-                            </th>
-                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">
-                                Name
-                            </th>
-                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">
-                                Created At
-                            </th>
-                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-400">
-                                Updated At
-                            </th>
+            <!-- Tabel Desktop -->
+            <div class="table-responsive d-none d-md-block">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>No.</th>
+                            <th>Name</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($roles as $role)
-                            <tr class="border-b border-gray-200 dark:border-gray-700">
-                                <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $loop->iteration }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $role->name }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $role->created_at->format('d M Y') }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ $role->updated_at->format('d M Y') }}</td>
+                        @forelse ($roles as $role)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $role->name }}</td>
+                                <td>{{ $role->created_at->format('d M Y') }}</td>
+                                <td>{{ $role->updated_at->format('d M Y') }}</td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center">No roles found.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
-
-                <div class="mt-4 px-6">
-                    {!! $roles->links() !!}
-                </div>
             </div>
+
+            <!-- Tampilan Mobile (List/Card) -->
+            <div class="d-md-none">
+                @forelse ($roles as $role)
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $role->name }}</h5>
+                            <p class="card-text">
+                                <strong>Created At:</strong> {{ $role->created_at->format('d M Y') }} <br>
+                                <strong>Updated At:</strong> {{ $role->updated_at->format('d M Y') }}
+                            </p>
+                        </div>
+                    </div>
+                @empty
+                    <div class="alert alert-info">No roles found.</div>
+                @endforelse
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-4">
+                {!! $roles->links('pagination::bootstrap-5') !!}
+            </div>
+
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection  {{-- Akhir bagian konten --}}

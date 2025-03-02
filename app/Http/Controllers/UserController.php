@@ -42,7 +42,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $roles = Role::all();
 
-        return view('pages.users.edit', compact('user', 'roles'));
+        return view('users.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, $id)

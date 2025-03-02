@@ -4,9 +4,12 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -81,5 +84,31 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}', [TransactionController::class, 'show'])->name('transactions.show');
         Route::delete('/{id}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
         Route::get('/{id}/print-invoice', [TransactionController::class, 'printInvoice'])->name('transactions.printInvoice');
+    });
+
+    Route::prefix('roles')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('roles.index');
+        Route::get('/create', [RoleController::class, 'create'])->name('roles.create');
+        Route::post('/', [RoleController::class, 'store'])->name('roles.store');
+        Route::get('/{id}', [RoleController::class, 'show'])->name('roles.show');
+        Route::delete('/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    });
+
+    Route::prefix('permissions')->group(function () {
+        Route::get('/', [PermissionController::class, 'index'])->name('permissions.index');
+        Route::get('/create', [PermissionController::class, 'create'])->name('permissions.create');
+        Route::post('/', [PermissionController::class, 'store'])->name('permissions.store');
+        Route::get('/{id}', [PermissionController::class, 'show'])->name('permissions.show');
+        Route::delete('/{id}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+    });
+
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('users.index');
+        Route::get('/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/', [UserController::class, 'store'])->name('users.store');
+        Route::get('/{id}', [UserController::class, 'show'])->name('users.show');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     });
 });
